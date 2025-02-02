@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .error-code {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #54D0A5;
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-home {
+            background-color: #54D0A5;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #45b18e;
+        }
+
+        .animated-image {
+            max-width: 300px;
+            margin-top: 2rem;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="container error-container">
+        <!-- <img src="lost.png"
+            alt="Lost in space illustration" class="animated-image animate__animated animate__pulse animate__infinite"> -->
+        <div class="error-code animate__animated animate__bounce">404 Error <br> This route is under maintenance! <br></div>
+        <div class="error-message">Next available page departing in... well, not now. Let’s turn back instead!</div>
+        <a href="/" class="btn btn-home">  Take Me Home</a>
+        
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
