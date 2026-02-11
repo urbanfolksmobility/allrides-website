@@ -4,151 +4,670 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AllRides - Your easy way around</title>
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <title>Allrides | Rent a Bike & Discover Varkala</title>
+    <meta name="description"
+        content="Book verified bike rentals in Varkala. All bikes, prices, and availability in one place. Explore hidden gems with our local map.">
+
+    <!-- Google Fonts: M PLUS Rounded 1c -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
+        :root {
+            --primary: #9CD36E;
+            --primary-dark: #5EAE1B;
+            --secondary: #1A1A1A;
+            --text: #333333;
+            --text-light: #666666;
+            --bg: #FAFAFA;
+            --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.7);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
 
-        .hero-section {
-            background: linear-gradient(to bottom, #54D0A5, #81c784);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .hero-image {
-            height: 100px;
-            margin-bottom: 30px;
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
         }
 
-        .features-section {
-            padding: 60px 20px;
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
-        .features-section h2 {
-            font-weight: 600;
+        /* --- Layout --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
-        .footer {
-            background-color: #343a40;
-            color: white;
+        section {
+            padding: 100px 0;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
             padding: 20px 0;
-            text-align: center;
+            transition: var(--transition);
         }
 
-        .footer a {
-            color: #54D0A5;
+        header.scrolled {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-text {
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        header.scrolled .logo-text {
+            color: var(--secondary);
+        }
+
+        .logo {
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .btn-cta {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 50px;
             text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        .btn-light {
-            background-color: #54D0A5;
-            border-color: #54D0A5;
-            color: white;
-        }
-
-        .btn-light:hover {
-            background-color: #45b18c;
-            border-color: #45b18c;
-            color: white;
-        }
-       .features-section h5{
             font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(84, 208, 165, 0.3);
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(84, 208, 165, 0.4);
+        }
+
+        /* --- Hero --- */
+        .hero {
+            position: relative;
+            padding-top: 180px;
+            padding-bottom: 120px;
+            overflow: hidden;
+            background-color: var(--primary);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 86c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm66 3c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm-40-4c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm40-45c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-60 20c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm5-25c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm39 25c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-55-30c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm56 73c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-48-38c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm19-2c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-11 0c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm20-2c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-6-48c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zM31 24c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm37 8c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm13 1c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-22-2c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zM45 43c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-3-12c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-9 6c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm16 6c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm15 16c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-4 4c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-4 7c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-1-13c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-14-12c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-9 31c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm28-2c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-14-37c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm19 4c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm19 24c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-3-22c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zM6 13c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm14 42c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm27-8c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-6 33c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-15-23c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm28 2c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-28-30c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm23 47c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-8 10c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm16 10c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-24-14c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM42 84c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm42 5c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-36-12c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm8-31c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM40 5c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm35 20c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-5-19c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM28 26c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm7 10c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM10 57c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm9 37c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM58 58c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm4 28c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm14-8c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-10-27c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM74 5c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-16 11c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm16 16c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM8 8c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-1 56c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm0-31c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm10 17c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm18-46c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM31 62c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm24-37c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm30 13c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM75 50c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-10 18c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm14 26c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm11-12c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-6-24c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM42 43c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-10 4c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-5-38c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1z' fill='%23ffffff' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-size: 100px 100px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+            text-transform: none;
+        }
+
+        .hero h1 .highlight {
+            background-color: var(--white);
+            color: var(--primary-dark);
+            padding: 0 20px;
+            border-radius: 12px;
+            display: inline-block;
+            transform: rotate(-1deg);
+            margin: 0 10px;
+        }
+
+        .hero .subtitle {
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--white);
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-item span:first-child {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .stat-item span:last-child {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* --- Pain Points --- */
+        .pain-points {
+            background: var(--white);
+        }
+
+        .section-tag {
+            background: rgba(84, 208, 165, 0.1);
+            color: var(--primary-dark);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 48px;
+            color: var(--secondary);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .card {
+            background: var(--bg);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: var(--white);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--secondary);
+        }
+
+        .card p {
+            color: var(--text-light);
+        }
+
+        /* --- FAQs --- */
+        .faq {
+            background: #f8fafc;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .faq-question {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .faq-item.active {
+            border-color: var(--primary);
+        }
+
+        .faq-item.active .faq-answer {
+            padding-bottom: 24px;
+            max-height: 200px;
+        }
+
+        .faq-item.active .chevron {
+            transform: rotate(180deg);
+        }
+
+        .chevron {
+            transition: var(--transition);
+            color: var(--primary);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 80px 0 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            margin-top: 16px;
+            color: #888;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .hero {
+                padding-top: 140px;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 32px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #54D0A5;">
-        <div class="container">
-            <a class="navbar-brand" href="https://allrides.in">
-                <img src="logo_name_250x150.png" alt="Allrides Logo" class="logo">
+
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+
+    <header id="header">
+        <div class="container nav-content">
+            <div class="logo-text" style="cursor: pointer;" onclick="location.href='new.html'">
+                <div style="font-weight: 800; font-size: 2rem; line-height: 1; letter-spacing: -0.05em;">allrides</div>
+                <div style="font-size: 0.7rem; font-weight: 500; opacity: 0.9; margin-top: -2px;">Your easy way around
+                </div>
+            </div>
+            <a href="download.html" class="btn-cta" style="background: var(--secondary);">
+                Get the App
+                <i data-lucide="arrow-right"></i>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://allrides.in/about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://allrides.in/terms-and-conditions">Terms & Conditions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://allrides.in/privacy-policy">Privacy Policy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://allrides.in/contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <img src="logo.png" alt="Allrides Logo" class="hero-image">
-            <h1>Welcome to AllRides</h1>
-            <p>Your go-to solution for unreserved ticketing, live location updates, and schedules.</p>
-            <a href="https://play.google.com/store/apps/details?id=in.transitfolks.allrides&pcampaignid=web_share"
-                class="btn btn-light  mt-3">Get it on playstore</a>
-        </div>
-    </section>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content animate-fade-in">
+                <span class="section-tag"
+                    style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3);">All
+                    bikes, one place</span>
+                <h1>Discover the <span class="highlight">Real Varkala</span> tourists have Never seen</h1>
+                <p class="subtitle">Get a ride and Discover with us</p>
 
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="container">
-            <h2 class="text-center mb-5">Why Choose AllRides?</h2>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <!-- <img src="https://via.placeholder.com/100" alt="Unreserved Ticketing" class="mb-3"> -->
-                    <h5>Unreserved Ticketing</h5>
-                    <p>Book your tickets effortlessly through our mobile app.</p>
+                <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 60px;">
+                    <a href="download.html" class="btn-cta"
+                        style="padding: 18px 40px; font-size: 1.2rem; text-decoration: none; background: var(--secondary); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        Get the App
+                    </a>
                 </div>
-                <div class="col-md-4">
-                    <!-- <img src="https://via.placeholder.com/100" alt="Live Location Updates" class="mb-3"> -->
-                    <h5>Live Location Updates</h5>
-                    <p>Track buses and trains in real-time with ease.</p>
-                </div>
-                <div class="col-md-4">
-                    <!-- <img src="https://via.placeholder.com/100" alt="Schedules" class="mb-3"> -->
-                    <h5>Schedules</h5>
-                    <p>Stay updated with the latest schedules and plan your journey better.</p>
+
+                <div class="hero-stats" style="margin-top: 80px;">
+                    <div class="stat-item">
+                        <i data-lucide="shield-check" style="color: var(--white);"></i>
+                        <span style="color: var(--white);">Verified Partners</span>
+                        <span style="color: rgba(255,255,255,0.8);">Trusted local rentals</span>
+                    </div>
+                    <div class="stat-item">
+                        <i data-lucide="zap" style="color: var(--white);"></i>
+                        <span style="color: var(--white);">Instant Booking</span>
+                        <span style="color: rgba(255,255,255,0.8);">No calls needed</span>
+                    </div>
+                    <div class="stat-item">
+                        <i data-lucide="map-pin" style="color: var(--white);"></i>
+                        <span style="color: var(--white);">Local Secret Spots</span>
+                        <span style="color: rgba(255,255,255,0.8);">Exclusive map access</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+        <!-- Pain points / Value Prop -->
+        <section class="pain-points">
+            <div class="container" style="text-align: center;">
+                <span class="section-tag">Why Allrides?</span>
+                <h2 class="section-title">The smarter way to move.</h2>
+
+                <div class="grid-3" style="text-align: left;">
+                    <div class="card">
+                        <div class="card-icon"><i data-lucide="search-x"></i></div>
+                        <h3>No More Searching</h3>
+                        <p>Stop visiting dozens of websites just to compare prices. We list all trusted local options in
+                            one clean interface.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i data-lucide="phone-off"></i></div>
+                        <h3>No Random Calls</h3>
+                        <p>Forget calling random numbers from Google Maps. Check live availability and book without the
+                            back-and-forth.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i data-lucide="map"></i></div>
+                        <h3>Beyond Navigation</h3>
+                        <p>While Google Maps shows you the road, we show you the soul. Find hidden routes and spots with
+                            a real local vibe.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <span class="section-tag">Questions?</span>
+                    <h2 class="section-title">Commonly Asked</h2>
+                </div>
+
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Why should I use Allrides instead of booking directly?
+                            <i data-lucide="chevron-down" class="chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Because you shouldn’t have to check 10 websites, make multiple calls, or visit offices just
+                            to compare prices and availability. Allrides lists trusted rentals in one place, so you can
+                            book in minutes.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Are the bikes and rentals trustworthy?
+                            <i data-lucide="chevron-down" class="chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. We work only with verified local rental partners. Clear pricing, reliable bikes, and no
+                            last-minute surprises.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Do I need to visit a rental office after booking?
+                            <i data-lucide="chevron-down" class="chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            No unnecessary visits. Book online, get the details, and pick up your bike smoothly.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How is Allrides different from Google Maps?
+                            <i data-lucide="chevron-down" class="chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Google Maps helps you reach places. Allrides helps you discover them. We focus on routes,
+                            spots, and places with real local vibe—the kind you’d miss if you only followed navigation.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            I’m new to Varkala. Will this still work for me?
+                            <i data-lucide="chevron-down" class="chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            That’s exactly who it’s built for. Whether a place is next to you or 5 km away, Allrides
+                            helps you find it without overthinking.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I choose bikes based on my plan?
+                            <i data-lucide="chevron-down" class="chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Absolutely. Whether it’s a short ride, a full-day explore, or multiple days—pick what fits
+                            your trip.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Is booking complicated?
+                            <i data-lucide="chevron-down" class="chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Not at all. Choose a bike, check availability, book, and ride. That’s it.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
         <div class="container">
-            <p>&copy; 2025 AllRides. All Rights Reserved.</p>
-            <p>
-                <a href="#contact">Contact Us</a> <br>
-                <a href="#">Facebook</a> |
-                <a href="#">Twitter</a> |
-                <a href="#">Instagram</a>
-            </p>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo-text" style="color: white; margin-bottom: 20px;">
+                        <div style="font-weight: 800; font-size: 2rem; line-height: 1; letter-spacing: -0.05em;">
+                            allrides</div>
+                        <div style="font-size: 0.7rem; font-weight: 500; opacity: 0.8; margin-top: -2px;">Your easy way
+                            around</div>
+                    </div>
+                    <p>Easy public transport for all</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+
+                        <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+
+                        <li><a href="partner-with-us.html">Partner with Us</a></li>
+                        <li><a href="https://www.instagram.com/allrides.in?igsh=MTl4czZlb2lxMWVkOQ=="
+                                target="_blank">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Urbanfolks Mobility. Revolutionizing Urban Mobility.
+            </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+
+                // Toggle active class
+                faqItem.classList.toggle('active');
+
+                // Close other items (optional, but cleaner)
+                // document.querySelectorAll('.faq-item').forEach(item => {
+                //     if (item !== faqItem) item.classList.remove('active');
+                // });
+            });
+        });
+    </script>
 </body>
 
 </html>
