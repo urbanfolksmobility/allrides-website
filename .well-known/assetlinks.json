@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "in.allrides.app",
+      "sha256_cert_fingerprints": [
+        "BF:9D:CC:27:E3:49:9F:0C:B3:F8:8C:FF:80:4D:FF:81:0B:38:63:62:18:4F:E9:1D:80:AF:16:6E:DC:4A:EE:85"
+      ]
+    }
+  }
+]
