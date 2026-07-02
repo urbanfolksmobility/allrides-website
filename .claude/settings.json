@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"https://data.jsdelivr.com/v1/packages/npm/open-runde\")",
+      "Bash(curl -sI \"https://cdn.jsdelivr.net/gh/lauridskern/open-runde@main/fonts/web/OpenRunde-Regular.woff2\")",
+      "Bash(curl -s \"https://api.github.com/repos/lauridskern/open-runde/git/trees/main?recursive=1\")"
+    ]
+  }
+}

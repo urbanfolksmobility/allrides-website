@@ -10,13 +10,16 @@
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/favicon.png">
-    <!-- Google Fonts: M PLUS Rounded 1c -->
+
+    <!-- Local fonts (Open Runde) -->
+    <link rel="stylesheet" href="assets/fonts.css">
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <!-- Icons (Lucide) -->
+    <!-- Icons (Untitled UI) -->
     <script src="assets/untitledui-icons.js"></script>
 
     <style>
@@ -37,14 +40,24 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'M PLUS Rounded 1c', sans-serif;
-            letter-spacing: -0.022em;
+        }
+
+        body,
+        button, input, select, textarea {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        .logo-text {
+            font-family: 'Open Runde', 'Inter', sans-serif;
+            letter-spacing: -0.04em;
+            line-height: 1;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.2;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -143,7 +156,7 @@
             font-weight: 800;
             color: var(--secondary);
             margin-bottom: 20px;
-            line-height: 1.2;
+            line-height: 1;
         }
 
         .status-badge {

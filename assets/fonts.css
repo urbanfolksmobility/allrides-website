@@ -1,0 +1,37 @@
+/*
+ * allrides typography
+ * Primary:   Open Runde (self-hosted) — headings & display, letter-spacing -4%, line-height 100%
+ * Secondary: Inter (Google Fonts, loaded per page) — body text, line-height 120%
+ */
+
+@font-face {
+    font-family: 'Open Runde';
+    src: url('fonts/OpenRunde-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Runde';
+    src: url('fonts/OpenRunde-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Runde';
+    src: url('fonts/OpenRunde-Semibold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Runde';
+    src: url('fonts/OpenRunde-Bold.woff2') format('woff2');
+    font-weight: 700 800;
+    font-style: normal;
+    font-display: swap;
+}

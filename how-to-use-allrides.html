@@ -13,10 +13,13 @@
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/favicon.png">
 
-    <!-- Google Fonts: M PLUS Rounded 1c -->
+    <!-- Local fonts (Open Runde) -->
+    <link rel="stylesheet" href="assets/fonts.css">
+
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <style>
@@ -35,14 +38,24 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'M PLUS Rounded 1c', sans-serif;
-            letter-spacing: -0.022em;
+        }
+
+        body,
+        button, input, select, textarea {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        .logo-text {
+            font-family: 'Open Runde', 'Inter', sans-serif;
+            letter-spacing: -0.04em;
+            line-height: 1;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.2;
             overflow-x: hidden;
         }
 
@@ -90,7 +103,7 @@
             font-size: clamp(1.7rem, 6vw, 2.2rem);
             font-weight: 800;
             color: var(--white);
-            line-height: 1.15;
+            line-height: 1;
             margin-bottom: 10px;
         }
 
@@ -125,16 +138,6 @@
         .step-card:nth-child(3) { animation-delay: 0.25s; }
         .step-card:nth-child(4) { animation-delay: 0.35s; }
         .step-card:nth-child(5) { animation-delay: 0.45s; }
-
-        .step-number {
-            position: absolute;
-            top: 18px;
-            right: 22px;
-            font-size: 2.6rem;
-            font-weight: 800;
-            color: rgba(94, 174, 27, 0.12);
-            line-height: 1;
-        }
 
         .step-badge {
             display: inline-block;
@@ -213,7 +216,6 @@
         <div class="container">
 
             <div class="step-card">
-                <span class="step-number">1</span>
                 <span class="step-badge">Step 1</span>
                 <img src="assets/step1.png" alt="Downloading the allrides app on a phone" width="224" height="224">
                 <h2>Download the allrides app</h2>
@@ -221,7 +223,6 @@
             </div>
 
             <div class="step-card">
-                <span class="step-number">2</span>
                 <span class="step-badge">Step 2</span>
                 <img src="assets/step2.png" alt="Scanning the QR code in the bus" width="224" height="224">
                 <h2>Scan the QR code</h2>
@@ -229,7 +230,6 @@
             </div>
 
             <div class="step-card">
-                <span class="step-number">3</span>
                 <span class="step-badge">Step 3</span>
                 <img src="assets/step3.png" alt="Choosing boarding and drop-off stops on the phone" width="224" height="224">
                 <h2>Choose your stops</h2>
@@ -237,7 +237,6 @@
             </div>
 
             <div class="step-card">
-                <span class="step-number">4</span>
                 <span class="step-badge">Step 4</span>
                 <img src="assets/step4.png" alt="Paying and receiving the ticket instantly" width="224" height="224">
                 <h2>Pay &amp; get your ticket</h2>
@@ -245,7 +244,6 @@
             </div>
 
             <div class="step-card">
-                <span class="step-number">5</span>
                 <span class="step-badge">Step 5</span>
                 <img src="assets/step5.png" alt="Showing the ticket code to the conductor" width="224" height="224">
                 <h2>Show your ticket</h2>
