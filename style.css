@@ -1,3 +1,7 @@
+* {
+    letter-spacing: -0.022em;
+}
+
 .navbar-brand {
     font-weight: 600;
 }
@@ -30,4 +34,3 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
-
