@@ -4,89 +4,629 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
+    <script>
+        // GitHub Pages has no server rewrites, so app deep-link paths
+        // (/scan/..., /share/bus/...) are served by this 404 page. Forward
+        // them to their landing pages with the original path preserved in
+        // ?link= so the app-open button there can carry the scanned token.
+        (function () {
+            var path = window.location.pathname;
+            var page = '';
+            if (path === '/scan' || path.indexOf('/scan/') === 0) page = '/scan.html';
+            else if (path === '/share/bus' || path.indexOf('/share/bus/') === 0) page = '/share-bus.html';
+            if (page) window.location.replace(page + '?link=' + encodeURIComponent(path));
+        })();
+    </script>
+    <title>404 — Wrong stop | allrides</title>
+    <meta name="description" content="This page took a different route. Head back home or grab the allrides app to scan, pay, and ride.">
+    <meta name="robots" content="noindex">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="apple-touch-icon" href="assets/favicon.png">
+    <!-- Favicon (absolute paths — this page renders at any URL depth) -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/favicon.png">
 
     <!-- Local fonts (Open Runde) -->
-    <link rel="stylesheet" href="assets/fonts.css">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="/assets/fonts.css">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (Untitled UI) -->
+    <script src="/assets/untitledui-icons.js"></script>
+
     <style>
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-            font-family: 'Inter', sans-serif;
-            line-height: 1.2;
+        :root {
+            --primary: #9CD36E;
+            --primary-dark: #5EAE1B;
+            --secondary: #1A1A1A;
+            --text: #333333;
+            --text-light: #666666;
+            --bg: #FAFAFA;
+            --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.7);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        button, input, select, textarea {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        .logo-text,
+        .code-404 {
             font-family: 'Open Runde', 'Inter', sans-serif;
             letter-spacing: -0.04em;
             line-height: 1;
         }
 
-        .error-container {
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.2;
+            overflow-x: hidden;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+        }
+
+        /* --- Header --- */
+        header {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
-            text-align: center;
         }
 
-        .error-code {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #54D0A5;
-        }
-
-        .error-message {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .logo-text {
+            color: var(--secondary);
+            cursor: pointer;
         }
 
         .btn-home {
-            background-color: #54D0A5;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
         }
 
         .btn-home:hover {
-            background-color: #45b18e;
+            color: var(--primary-dark);
         }
 
-        .animated-image {
-            max-width: 300px;
-            margin-top: 2rem;
+        /* --- Lost hero --- */
+        .lost-hero {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background-color: var(--primary);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 86c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm66 3c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm-40-4c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm40-45c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-60 20c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm5-25c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm39 25c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-55-30c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm56 73c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-48-38c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm19-2c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-11 0c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm20-2c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-6-48c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zM31 24c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm37 8c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm13 1c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-22-2c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zM45 43c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-3-12c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-9 6c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm16 6c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm15 16c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-4 4c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-4 7c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-1-13c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-14-12c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-9 31c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm28-2c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-14-37c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm19 4c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm19 24c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zm-3-22c-.552 0-1 .448-1 1s.448 1 1 1 1-.448 1-1-.448-1-1-1zM6 13c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm14 42c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm27-8c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-6 33c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-15-23c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm28 2c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-28-30c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm23 47c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-8 10c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm16 10c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-24-14c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM42 84c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm42 5c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-36-12c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm8-31c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM40 5c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm35 20c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-5-19c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM28 26c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm7 10c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM10 57c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm9 37c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM58 58c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm4 28c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm14-8c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-10-27c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM74 5c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-16 11c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm16 16c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM8 8c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-1 56c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm0-31c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm10 17c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm18-46c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM31 62c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm24-37c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm30 13c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM75 50c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-10 18c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm14 26c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm11-12c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-6-24c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zM42 43c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-10 4c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1zm-5-38c0-.552.448-1 1-1s1 .448 1 1-.448 1-1 1-1-.448-1-1z' fill='%23ffffff' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-size: 100px 100px;
+            padding: 130px 0 230px;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .code-404 {
+            display: flex;
+            justify-content: center;
+            gap: 0.02em;
+            font-weight: 800;
+            font-size: clamp(5.5rem, 22vw, 9.5rem);
+            color: var(--white);
+            text-shadow: 0 16px 44px rgba(0, 0, 0, 0.12);
+            margin-bottom: 20px;
+            user-select: none;
+        }
+
+        .digit {
+            display: inline-block;
+            transform-origin: 50% 100%;
+            will-change: transform;
+            cursor: default;
+        }
+
+        .lost-hero h1 {
+            font-size: clamp(1.6rem, 5vw, 2.6rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+
+        .lost-hero .subtitle {
+            color: var(--white);
+            font-size: 1.15rem;
+            opacity: 0.95;
+            max-width: 460px;
+            margin: 0 auto 36px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-404 {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            will-change: transform;
+            /* transform stays GSAP-owned (magnetic hover) — only paint props here */
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-404.primary {
+            background: var(--white);
+            color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-404.primary:hover {
+            background: var(--secondary);
+            color: var(--white);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+        }
+
+        .btn-404.ghost {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: var(--white);
+        }
+
+        .btn-404.ghost:hover {
+            background: var(--white);
+            color: var(--secondary);
+        }
+
+        .btn-404:focus-visible {
+            outline: 3px solid rgba(255, 255, 255, 0.85);
+            outline-offset: 3px;
+        }
+
+        /* --- Scene (road, bus, clouds, sign) --- */
+        .scene {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 210px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .cloud {
+            position: absolute;
+            width: 110px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.38);
+            border-radius: 40px;
+        }
+
+        .cloud::before {
+            content: "";
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            background: inherit;
+            border-radius: 50%;
+            top: -20px;
+            left: 18px;
+        }
+
+        .cloud::after {
+            content: "";
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: inherit;
+            border-radius: 50%;
+            top: -13px;
+            right: 20px;
+        }
+
+        .c1 { top: -330px; left: 7%; }
+        .c2 { top: -260px; right: 9%; opacity: 0.75; }
+        .c3 { top: -400px; right: 28%; opacity: 0.55; }
+
+        .road {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 18px;
+            background: var(--secondary);
+            overflow: hidden;
+        }
+
+        .dashes {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 3px;
+            width: calc(100% + 104px);
+            transform: translateY(-50%);
+            background: repeating-linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.85) 0 26px,
+                    transparent 26px 52px);
+        }
+
+        .bus {
+            position: absolute;
+            bottom: 13px;
+            left: 50%;
+            transform: translateX(-56%);
+            width: min(280px, 64vw);
+            pointer-events: auto;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .bus svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .honk {
+            position: absolute;
+            top: -30px;
+            right: 4%;
+            background: var(--white);
+            color: var(--secondary);
+            font-family: 'Open Runde', 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 7px 14px;
+            border-radius: 14px 14px 14px 4px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+            transform: scale(0);
+            opacity: 0;
+            visibility: hidden;
+            white-space: nowrap;
+        }
+
+        .puff {
+            position: absolute;
+            left: -4px;
+            bottom: 26px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.75);
+            opacity: 0;
+        }
+
+        .stop-sign {
+            position: absolute;
+            bottom: 16px;
+            right: 8%;
+            width: 58px;
+            transform-origin: 50% 100%;
+            pointer-events: auto;
+        }
+
+        .stop-sign svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #111;
+            color: #888;
+            padding: 32px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 640px) {
+            .lost-hero {
+                padding: 120px 0 200px;
+            }
+
+            .scene {
+                height: 180px;
+            }
+
+            .stop-sign {
+                width: 44px;
+                right: 3%;
+            }
+
+            .c1 { top: -300px; }
+            .c2 { top: -240px; }
+            .c3 { display: none; }
+        }
+
+        /* --- Reduced motion: static scene, everything readable --- */
+        @media (prefers-reduced-motion: reduce) {
+            .puff,
+            .honk {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container error-container">
-        <!-- <img src="lost.png"
-            alt="Lost in space illustration" class="animated-image animate__animated animate__pulse animate__infinite"> -->
-        <div class="error-code animate__animated animate__bounce">404 Error <br> This route is under maintenance! <br>
+
+    <header>
+        <div class="container nav-content">
+            <div class="logo-text" onclick="location.href='/'">
+                <div style="font-weight: 800; font-size: 1.8rem; line-height: 1; letter-spacing: -0.05em;">allrides</div>
+                <div style="font-size: 0.7rem; font-weight: 500; opacity: 0.8; margin-top: -2px;">Your easy way around
+                </div>
+            </div>
+            <a href="/index.html" class="btn-home">
+                <i data-icon="info-circle"></i>
+                About
+            </a>
         </div>
-        <div class="error-message">Next available page departing in... well, not now. Let’s turn back instead!</div>
-        <a href="/" class="btn btn-home"> Take Me Home</a>
+    </header>
 
-    </div>
+    <main>
+        <section class="lost-hero">
+            <div class="container hero-inner">
+                <span class="section-tag">Route not found</span>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <div class="code-404" aria-label="Error 404">
+                    <span class="digit">4</span><span class="digit">0</span><span class="digit">4</span>
+                </div>
+
+                <h1>Looks like you got off at the wrong stop</h1>
+                <p class="subtitle">This page isn't on any of our routes. The next ride home leaves right now — or hop
+                    on with the app.</p>
+
+                <div class="actions">
+                    <a href="/" class="btn-404 primary">
+                        Take me home
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=in.allrides.app" class="btn-404 ghost"
+                        target="_blank" rel="noopener">
+                        Get the app
+                    </a>
+                </div>
+            </div>
+
+            <!-- Decorative scene: drifting clouds, bus on the road, 404 stop sign -->
+            <div class="scene" aria-hidden="true">
+                <div class="cloud c1"></div>
+                <div class="cloud c2"></div>
+                <div class="cloud c3"></div>
+
+                <div class="stop-sign" id="stopSign">
+                    <svg viewBox="0 0 60 140" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="27" y="34" width="6" height="106" rx="3" fill="#1A1A1A" />
+                        <circle cx="30" cy="27" r="24" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="5" />
+                        <text x="30" y="33" text-anchor="middle" font-family="'Open Runde','Inter',sans-serif"
+                            font-weight="800" font-size="15" fill="#1A1A1A">404</text>
+                    </svg>
+                </div>
+
+                <div class="bus" id="bus">
+                    <div class="honk" id="honk">Beep beep!</div>
+                    <div class="puff"></div>
+                    <div class="puff"></div>
+                    <div class="puff"></div>
+                    <svg viewBox="0 0 260 120" xmlns="http://www.w3.org/2000/svg">
+                        <g id="busBody">
+                            <rect x="0" y="70" width="12" height="6" rx="3" fill="#1A1A1A" />
+                            <rect x="8" y="14" width="224" height="70" rx="16" fill="#FFFFFF" />
+                            <rect x="12" y="62" width="216" height="13" fill="#9CD36E" />
+                            <rect x="24" y="26" width="34" height="26" rx="6" fill="#E3F3D3" />
+                            <rect x="68" y="26" width="34" height="26" rx="6" fill="#E3F3D3" />
+                            <rect x="112" y="26" width="34" height="26" rx="6" fill="#E3F3D3" />
+                            <rect x="156" y="26" width="28" height="48" rx="6" fill="#D3EDBB" />
+                            <rect x="196" y="26" width="26" height="26" rx="6" fill="#E3F3D3" />
+                            <circle cx="227" cy="57" r="4.5" fill="#FFB347" />
+                            <text x="86" y="72.5" text-anchor="middle"
+                                font-family="'Open Runde','Inter',sans-serif" font-weight="800" font-size="11"
+                                letter-spacing="-0.3" fill="#1A1A1A">allrides</text>
+                        </g>
+                        <g class="wheel">
+                            <circle cx="56" cy="94" r="16" fill="#1A1A1A" />
+                            <circle cx="56" cy="94" r="6.5" fill="#FAFAFA" />
+                            <circle cx="56" cy="83.5" r="2" fill="#9CD36E" />
+                        </g>
+                        <g class="wheel">
+                            <circle cx="184" cy="94" r="16" fill="#1A1A1A" />
+                            <circle cx="184" cy="94" r="6.5" fill="#FAFAFA" />
+                            <circle cx="184" cy="83.5" r="2" fill="#9CD36E" />
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="road">
+                    <div class="dashes"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            &copy; 2026 Urbanfolks Mobility. Your easy way around.
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+        if (window.untitledUI) untitledUI.createIcons();
+    </script>
+    <script>
+        // Micro-interactions (GSAP). The page is fully readable without JS:
+        // animations use gsap.from()/loops only, so a failed CDN load or
+        // prefers-reduced-motion leaves clean static content.
+        (function () {
+            if (!window.gsap) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+            // --- Intro ---
+            gsap.timeline({ defaults: { ease: 'power3.out' } })
+                .from('.section-tag', { y: -24, autoAlpha: 0, duration: 0.5 })
+                .from('.digit', {
+                    y: -90,
+                    autoAlpha: 0,
+                    rotation: function (i) { return i === 1 ? 0 : (i === 0 ? -8 : 8); },
+                    stagger: 0.09,
+                    duration: 0.7,
+                    ease: 'back.out(1.6)'
+                }, '-=0.2')
+                .from('.lost-hero h1', { y: 26, autoAlpha: 0, duration: 0.55 }, '-=0.25')
+                .from('.lost-hero .subtitle', { y: 22, autoAlpha: 0, duration: 0.5 }, '-=0.35')
+                .from('.actions .btn-404', { y: 18, autoAlpha: 0, stagger: 0.08, duration: 0.45 }, '-=0.3')
+                .from('.scene', { y: 30, autoAlpha: 0, duration: 0.6 }, '-=0.35');
+
+            // --- Ambient loops ---
+            gsap.to('.wheel', { rotation: 360, transformOrigin: '50% 50%', repeat: -1, duration: 1.15, ease: 'none' });
+            gsap.to('#busBody', { y: -2.5, yoyo: true, repeat: -1, duration: 0.45, ease: 'sine.inOut' });
+            gsap.to('.dashes', { x: -52, repeat: -1, duration: 0.55, ease: 'none' });
+            gsap.to('#stopSign', { rotation: 2.5, transformOrigin: '50% 100%', yoyo: true, repeat: -1, duration: 2.2, ease: 'sine.inOut' });
+
+            gsap.utils.toArray('.cloud').forEach(function (c, i) {
+                gsap.to(c, { x: i % 2 ? -26 : 26, yoyo: true, repeat: -1, duration: 5 + i * 1.7, ease: 'sine.inOut' });
+            });
+
+            gsap.utils.toArray('.puff').forEach(function (p, i) {
+                gsap.to(p, {
+                    keyframes: [
+                        { autoAlpha: 0.7, scale: 0.9, x: -8, y: -4, duration: 0.35 },
+                        { autoAlpha: 0, scale: 1.6, x: -36, y: -20, duration: 1.15, ease: 'power1.out' }
+                    ],
+                    repeat: -1,
+                    repeatDelay: 0.1,
+                    delay: i * 0.5
+                });
+            });
+
+            // --- Digit jelly on hover/touch ---
+            gsap.utils.toArray('.digit').forEach(function (d) {
+                d.addEventListener('pointerenter', function () {
+                    gsap.fromTo(d, { scaleY: 0.72, scaleX: 1.22 },
+                        { scaleY: 1, scaleX: 1, duration: 0.9, ease: 'elastic.out(1.1, 0.4)' });
+                });
+            });
+
+            // --- Honk: tap the bus ---
+            var honking = false;
+            document.getElementById('bus').addEventListener('click', function () {
+                if (honking) return;
+                honking = true;
+                gsap.timeline({ onComplete: function () { honking = false; } })
+                    .to('#busBody', { scaleY: 0.88, scaleX: 1.05, transformOrigin: '50% 100%', duration: 0.12, ease: 'power2.out' })
+                    .to('#busBody', { scaleY: 1, scaleX: 1, duration: 0.7, ease: 'elastic.out(1, 0.35)' })
+                    .fromTo('#honk', { scale: 0, autoAlpha: 0, y: 0 },
+                        { scale: 1, autoAlpha: 1, duration: 0.3, ease: 'back.out(2.5)' }, 0)
+                    .to('#honk', { autoAlpha: 0, y: -12, duration: 0.35 }, 0.85);
+            });
+
+            // --- Desktop only: magnetic buttons + pointer parallax ---
+            if (fine) {
+                gsap.utils.toArray('.btn-404').forEach(function (btn) {
+                    var xTo = gsap.quickTo(btn, 'x', { duration: 0.35, ease: 'power3' });
+                    var yTo = gsap.quickTo(btn, 'y', { duration: 0.35, ease: 'power3' });
+                    btn.addEventListener('pointermove', function (e) {
+                        var r = btn.getBoundingClientRect();
+                        xTo((e.clientX - (r.left + r.width / 2)) * 0.22);
+                        yTo((e.clientY - (r.top + r.height / 2)) * 0.3);
+                    });
+                    btn.addEventListener('pointerleave', function () { xTo(0); yTo(0); });
+                });
+
+                var layers = [
+                    { to: gsap.quickTo('.code-404', 'x', { duration: 0.6, ease: 'power3' }), depth: 8 },
+                    { to: gsap.quickTo('.c1', 'y', { duration: 0.8, ease: 'power3' }), depth: 14 },
+                    { to: gsap.quickTo('.c2', 'y', { duration: 0.8, ease: 'power3' }), depth: 22 },
+                    { to: gsap.quickTo('.c3', 'y', { duration: 0.8, ease: 'power3' }), depth: 10 }
+                ];
+                document.querySelector('.lost-hero').addEventListener('pointermove', function (e) {
+                    var nx = (e.clientX / window.innerWidth) * 2 - 1;
+                    var ny = (e.clientY / window.innerHeight) * 2 - 1;
+                    layers[0].to(nx * layers[0].depth);
+                    layers[1].to(ny * layers[1].depth);
+                    layers[2].to(ny * layers[2].depth);
+                    layers[3].to(ny * layers[3].depth);
+                });
+
+                var sign = document.getElementById('stopSign');
+                sign.addEventListener('pointerenter', function () {
+                    gsap.fromTo(sign, { rotation: -7 }, { rotation: 0, duration: 1.1, ease: 'elastic.out(1.2, 0.3)' });
+                });
+            }
+        })();
+    </script>
 </body>
 
 </html>
