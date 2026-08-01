@@ -5,12 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        // GitHub Pages has no server rewrites, so app deep-link paths
-        // (/scan/..., /share/bus/...) are served by this 404 page. Forward
-        // them to their landing pages with the original path preserved in
-        // ?link= so the app-open button there can carry the scanned token.
+        // GitHub Pages has no server rewrites — deep-link paths are served
+        // by this 404 page and routed client-side before the body paints.
         (function () {
             var path = window.location.pathname;
+
+            // Valid sticker path (/scan/<vertical>/<intent>/<token>) on
+            // Android reaching the browser = app not installed (App Links
+            // would have claimed it) → skip the landing page, go to store.
+            if (/^\/scan\/[a-z]+\/[a-z]+\/[A-Za-z0-9_-]{7,64}$/.test(path) &&
+                /android/i.test(navigator.userAgent || '')) {
+                window.location.replace('https://play.google.com/store/apps/details?id=in.allrides.app');
+                return;
+            }
+
+            // Everything else under /scan and /share/bus → landing page,
+            // original path preserved in ?link=.
             var page = '';
             if (path === '/scan' || path.indexOf('/scan/') === 0) page = '/scan.html';
             else if (path === '/share/bus' || path.indexOf('/share/bus/') === 0) page = '/share-bus.html';
